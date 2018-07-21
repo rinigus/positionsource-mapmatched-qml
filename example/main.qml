@@ -60,4 +60,17 @@ Window {
         mapMatchingMode: 1
         onPositionChanged: positionCircle.center = pos.position.coordinate
     }
+
+    Text {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        text: {
+            var s = 'Street: ' + pos.streetName
+            s += "\nSpeed limit: " + Math.round(pos.streetSpeedLimit*3.6) + ' km/h'
+            s += "\nSpeed assumed: " + Math.round(pos.streetSpeedAssumed*3.6) + ' km/h'
+            s += "\nDirection: " + pos.direction
+            s += "\nDirection valid: " + pos.directionValid
+            return s;
+        }
+    }
 }
