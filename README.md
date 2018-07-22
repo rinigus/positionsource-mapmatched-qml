@@ -130,7 +130,7 @@ matching algorithm.
   seconds.
   
 
-### Debug properties
+### Testing
 
 To simplify debugging in the absence of GPS signal, one can provide
 coordinates by using **`testingCoordinate`** property. For example, as
