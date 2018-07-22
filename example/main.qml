@@ -58,6 +58,7 @@ Window {
     PositionSourceMapMatched {
         id: pos
         mapMatchingMode: 1
+        timingStatsEnable: true
         onPositionChanged: positionCircle.center = pos.position.coordinate
     }
 
@@ -77,6 +78,11 @@ Window {
                 s += "\nSpeed assumed: " + Math.round(pos.streetSpeedAssumed*3.6) + ' km/h'
                 s += "\nDirection: " + pos.direction
                 s += "\nDirection valid: " + pos.directionValid
+                s += "\n"
+                s += "Timing:\n"
+                s += "Average: " + (pos.timingOverallAvr*1e3).toFixed(1) + " ms\n"
+                s += "Min: " + pos.timingOverallMin*1e3 + " ms\n"
+                s += "Max: " + pos.timingOverallMax*1e3 + " ms\n"
                 return s;
             }
         }

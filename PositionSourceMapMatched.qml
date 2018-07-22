@@ -22,6 +22,18 @@ Item {
     property alias updateInterval: gps.updateInterval
     property alias valid: gps.valid
 
+    // Timing statistics support
+    property bool  timingStatsEnable: false
+    property real  timingOverallAvr: 0
+    property real  timingOverallMax: 0
+    property real  timingOverallMin: -1
+
+    // Timing statistics support - internal vars
+    property int   _timingOverallCounter: 0
+    property real  _timingOverallSum: 0.0
+    property bool  _timingShot: false
+    property var   _timingLastCallStart: undefined
+
     // Properties used for testing
     property var   testingCoordinate: undefined
 
@@ -57,6 +69,11 @@ Item {
                     scoutbus.mode &&
                     position.latitudeValid && position.longitudeValid &&
                     position.horizontalAccuracyValid) {
+                if (master.timingStatsEnable && !master._timingShot) {
+                    master._timingOverallCounter += 1;
+                    master._timingShot = true;
+                    master._timingLastCallStart = Date.now();
+                }
                 scoutbus.mapMatch(position);
             } else {
                 master.position = position;
@@ -129,6 +146,15 @@ Item {
 
                           // always update position
                           master.position = position;
+
+                          if (master._timingShot) {
+                              var dt = 1e-3*(Date.now() - master._timingLastCallStart);
+                              master._timingShot = false;
+                              master._timingOverallSum += dt;
+                              if (master.timingOverallMax < dt) master.timingOverallMax = dt;
+                              if (master.timingOverallMin<0 || master.timingOverallMin > dt) master.timingOverallMin = dt;
+                              master.timingOverallAvr = master._timingOverallSum/master._timingOverallCounter;
+                          }
                       },
                       function(result) {
                           // error
