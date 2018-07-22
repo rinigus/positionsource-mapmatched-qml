@@ -81,8 +81,8 @@ Window {
                 s += "\n"
                 s += "Timing:\n"
                 s += "Average: " + (pos.timingOverallAvr*1e3).toFixed(1) + " ms\n"
-                s += "Min: " + pos.timingOverallMin*1e3 + " ms\n"
-                s += "Max: " + pos.timingOverallMax*1e3 + " ms\n"
+                s += "Min: " + (pos.timingOverallMin*1e3).toFixed(1) + " ms\n"
+                s += "Max: " + (pos.timingOverallMax*1e3).toFixed(1) + " ms\n"
                 return s;
             }
         }
