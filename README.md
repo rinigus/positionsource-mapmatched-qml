@@ -83,12 +83,14 @@ production, testing, and timining.
   follows `enum Mode` values in valhallamapmatcher.h of OSM Scout
   Server code. At present, the following modes are available (value and its
   meaning listed below):
+
   - 0 no map matching
   - 1 car, "auto" in Valhalla API
   - 2 car along shorter distance, "auto_shorter" in Valhalla API
   - 3 bicycle
   - 4 bus
   - 5 pedestrian
+
   Care will be taken to keep map matching modes backwards
   compatible and only extension of the values is planned, if
   needed.
