@@ -24,10 +24,10 @@ Window {
         center: QtPositioning.coordinate(59.437, 24.754) // Tallinn
         zoomLevel: 14
 
-//        bearing: {
-//            if (pos.directionValid) return pos.direction;
-//            return 0;
-//        }
+        //        bearing: {
+        //            if (pos.directionValid) return pos.direction;
+        //            return 0;
+        //        }
 
         MapCircle {
             id: positionCircle
@@ -61,16 +61,24 @@ Window {
         onPositionChanged: positionCircle.center = pos.position.coordinate
     }
 
-    Text {
+    Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
-        text: {
-            var s = 'Street: ' + pos.streetName
-            s += "\nSpeed limit: " + Math.round(pos.streetSpeedLimit*3.6) + ' km/h'
-            s += "\nSpeed assumed: " + Math.round(pos.streetSpeedAssumed*3.6) + ' km/h'
-            s += "\nDirection: " + pos.direction
-            s += "\nDirection valid: " + pos.directionValid
-            return s;
+        anchors.margins: 10
+        color: "white"
+        height: txt.height + 10
+        width: txt.width + 10
+        Text {
+            id: txt
+            anchors.centerIn: parent
+            text: {
+                var s = 'Street: ' + pos.streetName
+                s += "\nSpeed limit: " + Math.round(pos.streetSpeedLimit*3.6) + ' km/h'
+                s += "\nSpeed assumed: " + Math.round(pos.streetSpeedAssumed*3.6) + ' km/h'
+                s += "\nDirection: " + pos.direction
+                s += "\nDirection valid: " + pos.directionValid
+                return s;
+            }
         }
     }
 }
