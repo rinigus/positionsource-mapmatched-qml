@@ -47,6 +47,7 @@ Item {
     /// Implementation
     //////////////////////////////////////////////////////////////
 
+    // provider for actual position
     PositionSource {
         id: gps
         active: true
@@ -69,6 +70,7 @@ Item {
         //onUpdateTimeout: master.updateTimeout()
     }
 
+    // interaction with OSM Scout Server via D-Bus
     DBusInterface {
         id: scoutbus
         service: "org.osm.scout.server1"
@@ -100,9 +102,9 @@ Item {
 
             typedCall("Update",
                       [ {'type': 'i', 'value': mode},
-                        {'type': 'd', 'value': position.coordinate.latitude},
-                        {'type': 'd', 'value': position.coordinate.longitude},
-                        {'type': 'd', 'value': position.horizontalAccuracy} ],
+                       {'type': 'd', 'value': position.coordinate.latitude},
+                       {'type': 'd', 'value': position.coordinate.longitude},
+                       {'type': 'd', 'value': position.horizontalAccuracy} ],
                       function(result) {
                           // successful call
                           var r = JSON.parse(result);
@@ -159,6 +161,7 @@ Item {
         }
     }
 
+    // monitor availibility of OSM Scout Server on D-Bus
     DBusInterface {
         // monitors availibility of the dbus service
         service: "org.freedesktop.DBus"
@@ -172,8 +175,25 @@ Item {
         }
     }
 
-    // Support for testing
+    // start OSM Scout Server via systemd socket activation
+    // if the server is not available, but needed
+    Timer {
+        id: activationTimer
+        interval: 5000
+        repeat: true
+        running: scoutbus.mode > 0 && !scoutbus.available
+        onTriggered: {
+            console.log('Activating OSM Scout Server');
 
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET",
+                         "http://localhost:8553/v1/activate",
+                         true);
+            xmlhttp.send();
+        }
+    }
+
+    // support for testing
     Timer {
         id: testingTimer
         interval: gps.updateInterval
