@@ -236,6 +236,19 @@ Item {
         }
     }
 
+    onTimingStatsEnableChanged: {
+        // reset if timing stats started
+        if (timingStatsEnable) {
+            timingOverallAvr = 0;
+            timingOverallMax = 0;
+            timingOverallMin = -1;
+
+            _timingOverallCounter = 0;
+            _timingOverallSum = 0.0;
+            _timingShot = false;
+        }
+    }
+
     onTestingCoordinateChanged: {
         if (!testingTimer.running) testingTimer.running = true;
     }
