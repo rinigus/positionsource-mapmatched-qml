@@ -76,7 +76,7 @@ Window {
                 var s = 'Street: ' + pos.streetName
                 s += "\nSpeed limit: " + Math.round(pos.streetSpeedLimit*3.6) + ' km/h'
                 s += "\nSpeed assumed: " + Math.round(pos.streetSpeedAssumed*3.6) + ' km/h'
-                s += "\nDirection: " + pos.direction
+                s += "\nDirection: " + (pos.direction).toFixed(1)
                 s += "\nDirection valid: " + pos.directionValid
                 s += "\n"
                 s += "Timing:\n"

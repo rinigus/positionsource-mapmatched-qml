@@ -133,7 +133,6 @@ Item {
 
                           var latitude = master.position.coordinate.latitude
                           var longitude = master.position.coordinate.longitude
-
                           if (r.latitude !== undefined) latitude = r.latitude;
                           if (r.longitude !== undefined) longitude = r.longitude;
                           position.coordinate = QtPositioning.coordinate(latitude, longitude);
@@ -250,6 +249,10 @@ Item {
     }
 
     onTestingCoordinateChanged: {
-        if (!testingTimer.running) testingTimer.running = true;
+        if (testingCoordinate==null) {
+            testingTimer.running = false;
+        } else {
+            testingTimer.running = true;
+        }
     }
 }
