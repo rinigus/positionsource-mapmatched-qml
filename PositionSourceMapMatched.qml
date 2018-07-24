@@ -90,7 +90,6 @@ Item {
     // provider for actual position
     PositionSource {
         id: gps
-        active: true
 
         function positionUpdate(position) {
             if (scoutbus.available &&
@@ -111,6 +110,10 @@ Item {
         }
 
         onPositionChanged: positionUpdate(position)
+
+        onActiveChanged: {
+            if (!gps.active) scoutbus.stop();
+        }
 
         //onUpdateTimeout: master.updateTimeout()
     }
@@ -135,10 +138,11 @@ Item {
                 if (!available) {
                     available = true;
                     if (mode) call('Reset', mode);
+                    resetValues();
                 }
             } else {
                 available = false
-                if (mode) resetValues();
+                resetValues();
             }
         }
 
@@ -211,6 +215,7 @@ Item {
         onModeChanged: {
             if (!available) return;
             if (mode) call('Reset', mode);
+            resetValues();
         }
     }
 
