@@ -36,7 +36,7 @@ Window {
                 longitude: 24.754
             }
 
-            radius: 15.0
+            radius: 5.0
             color: 'red'
             border.width: 3
         }
@@ -45,7 +45,7 @@ Window {
             id: positionCenter
             center:parent.center
 
-            radius: 10.0
+            radius: 6
             color: 'green'
             border.width: 3
         }
@@ -57,7 +57,7 @@ Window {
 
     PositionSourceMapMatched {
         id: pos
-        mapMatchingMode: 1
+        mapMatchingMode: 2
         timingStatsEnable: true
         onPositionChanged: positionCircle.center = pos.position.coordinate
     }
