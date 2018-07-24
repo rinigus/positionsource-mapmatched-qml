@@ -27,7 +27,7 @@
 
 
 import QtQuick 2.0
-import QtPositioning 5.2
+import QtPositioning 5.3
 import Nemo.DBus 2.0
 
 Item {
@@ -255,7 +255,7 @@ Item {
         onTriggered: {
             var p= {};
             p.coordinate = master.testingCoordinate;
-            p.horizontalAccuracy = 15;
+            p.horizontalAccuracy = 10;
             p.latitudeValid = true;
             p.longitudeValid = true;
             p.horizontalAccuracyValid = true;
